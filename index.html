@@ -26,7 +26,8 @@
     <div class="muted">Chi đoàn Khối Văn phòng – Lâm Đồng</div>
   </header>
 
-  <form id="voteForm" class="card">
+  <!-- CHẶN SUBMIT MẶC ĐỊNH -->
+  <form id="voteForm" class="card" autocomplete="off" onsubmit="return false;">
     <div class="row head">
       <div class="name">Ứng viên</div>
       <div class="opt">Đồng ý</div>
@@ -34,64 +35,42 @@
     </div>
 
     <!-- Đại biểu chính -->
-    <div class="row">
-      <div class="name">1. TRẦN THANH SƠN</div>
+    <div class="row"><div class="name">1. TRẦN THANH SƠN</div>
       <label class="opt"><input type="radio" name="SON_1" value="Đồng ý" required></label>
-      <label class="opt"><input type="radio" name="SON_1" value="Không đồng ý"></label>
-    </div>
-    <div class="row">
-      <div class="name">2. THÂN NGUYỄN MINH HUY</div>
+      <label class="opt"><input type="radio" name="SON_1" value="Không đồng ý"></label></div>
+    <div class="row"><div class="name">2. THÂN NGUYỄN MINH HUY</div>
       <label class="opt"><input type="radio" name="HUY_2" value="Đồng ý" required></label>
-      <label class="opt"><input type="radio" name="HUY_2" value="Không đồng ý"></label>
-    </div>
-    <div class="row">
-      <div class="name">3. NGUYỄN DƯƠNG MAI NHUNG</div>
+      <label class="opt"><input type="radio" name="HUY_2" value="Không đồng ý"></label></div>
+    <div class="row"><div class="name">3. NGUYỄN DƯƠNG MAI NHUNG</div>
       <label class="opt"><input type="radio" name="NHUNG_3" value="Đồng ý" required></label>
-      <label class="opt"><input type="radio" name="NHUNG_3" value="Không đồng ý"></label>
-    </div>
-    <div class="row">
-      <div class="name">4. TRẦN THANH CẢNH</div>
+      <label class="opt"><input type="radio" name="NHUNG_3" value="Không đồng ý"></label></div>
+    <div class="row"><div class="name">4. TRẦN THANH CẢNH</div>
       <label class="opt"><input type="radio" name="CANH_4" value="Đồng ý" required></label>
-      <label class="opt"><input type="radio" name="CANH_4" value="Không đồng ý"></label>
-    </div>
-    <div class="row">
-      <div class="name">5. VÕ VĂN HIẾU</div>
+      <label class="opt"><input type="radio" name="CANH_4" value="Không đồng ý"></label></div>
+    <div class="row"><div class="name">5. VÕ VĂN HIẾU</div>
       <label class="opt"><input type="radio" name="HIEU_5" value="Đồng ý" required></label>
-      <label class="opt"><input type="radio" name="HIEU_5" value="Không đồng ý"></label>
-    </div>
-    <div class="row">
-      <div class="name">6. NGUYỄN THỊ THÙY TRANG</div>
+      <label class="opt"><input type="radio" name="HIEU_5" value="Không đồng ý"></label></div>
+    <div class="row"><div class="name">6. NGUYỄN THỊ THÙY TRANG</div>
       <label class="opt"><input type="radio" name="TRANG_6" value="Đồng ý" required></label>
-      <label class="opt"><input type="radio" name="TRANG_6" value="Không đồng ý"></label>
-    </div>
-    <div class="row">
-      <div class="name">7. LÊ HỮU MINH</div>
+      <label class="opt"><input type="radio" name="TRANG_6" value="Không đồng ý"></label></div>
+    <div class="row"><div class="name">7. LÊ HỮU MINH</div>
       <label class="opt"><input type="radio" name="MINH_7" value="Đồng ý" required></label>
-      <label class="opt"><input type="radio" name="MINH_7" value="Không đồng ý"></label>
-    </div>
-    <div class="row">
-      <div class="name">8. THÁI THỊ CHÂU</div>
+      <label class="opt"><input type="radio" name="MINH_7" value="Không đồng ý"></label></div>
+    <div class="row"><div class="name">8. THÁI THỊ CHÂU</div>
       <label class="opt"><input type="radio" name="CHAU_8" value="Đồng ý" required></label>
-      <label class="opt"><input type="radio" name="CHAU_8" value="Không đồng ý"></label>
-    </div>
-    <div class="row">
-      <div class="name">9. TRẦN DANH KHOA</div>
+      <label class="opt"><input type="radio" name="CHAU_8" value="Không đồng ý"></label></div>
+    <div class="row"><div class="name">9. TRẦN DANH KHOA</div>
       <label class="opt"><input type="radio" name="KHOA_9" value="Đồng ý" required></label>
-      <label class="opt"><input type="radio" name="KHOA_9" value="Không đồng ý"></label>
-    </div>
-    <div class="row">
-      <div class="name">10. NGUYỄN ANH TRẠNG</div>
+      <label class="opt"><input type="radio" name="KHOA_9" value="Không đồng ý"></label></div>
+    <div class="row"><div class="name">10. NGUYỄN ANH TRẠNG</div>
       <label class="opt"><input type="radio" name="TRANG_10" value="Đồng ý" required></label>
-      <label class="opt"><input type="radio" name="TRANG_10" value="Không đồng ý"></label>
-    </div>
+      <label class="opt"><input type="radio" name="TRANG_10" value="Không đồng ý"></label></div>
 
     <hr style="margin:16px 0;border:none;border-top:1px dashed #e5e7eb" />
     <div class="row head"><div class="name">Dự khuyết</div><div></div><div></div></div>
-    <div class="row">
-      <div class="name">1. NGUYỄN MINH TRÍ</div>
+    <div class="row"><div class="name">1. NGUYỄN MINH TRÍ</div>
       <label class="opt"><input type="radio" name="TRI_DK_1" value="Đồng ý" required></label>
-      <label class="opt"><input type="radio" name="TRI_DK_1" value="Không đồng ý"></label>
-    </div>
+      <label class="opt"><input type="radio" name="TRI_DK_1" value="Không đồng ý"></label></div>
 
     <div style="margin-top:16px">
       <label class="muted">Mã định danh (nếu áp dụng chống trùng): </label>
@@ -99,45 +78,56 @@
     </div>
 
     <div style="margin-top:16px;display:flex;gap:10px;align-items:center">
-      <button type="submit" id="btnSubmit">Gửi phiếu</button>
+      <button type="button" id="btnSubmit">Gửi phiếu</button>
       <span id="msg" class="muted"></span>
     </div>
   </form>
 
   <script>
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx4RUMQ0WKFyKJJCv2bZhXEwUNythkLUOe1NMG_gI44K9bDC-fssolk36iLbfHLIilK/exec";
-    const RESULTS_URL = "results.html";
+    var SCRIPT_URL  = "https://script.google.com/macros/s/AKfycbx4RUMQ0WKFyKJJCv2bZhXEwUNythkLUOe1NMG_gI44K9bDC-fssolk36iLbfHLIilK/exec";
+    var RESULTS_URL = "https://thanhsonlda-bit.github.io/baucu-lda-2025/results.html";
 
-    if (localStorage.getItem("voted") === "1") {{ window.location.replace(RESULTS_URL); }}
+    if (localStorage.getItem("voted") === "1") window.location.replace(RESULTS_URL);
 
-    const form = document.getElementById('voteForm');
-    const btn = document.getElementById('btnSubmit');
-    const msg = document.getElementById('msg');
+    var form = document.getElementById('voteForm');
+    var btn  = document.getElementById('btnSubmit');
+    var msg  = document.getElementById('msg');
 
-    history.replaceState(null, "", location.href);
-    window.addEventListener("popstate", function(){{ window.location.replace(RESULTS_URL); }});
+    // chặn back
+    history.pushState(null, "", location.href);
+    window.addEventListener("popstate", function(){ window.location.replace(RESULTS_URL); });
 
-    form.addEventListener('submit', async (e) => {{
-      e.preventDefault();
-      btn.disabled = true; msg.textContent = "Đang gửi...";
-      try {{
-        const data = Object.fromEntries(new FormData(form).entries());
-        data.submitted_at = new Date().toISOString();
-        const res = await fetch(SCRIPT_URL, {{
-          method: 'POST',
-          mode: 'cors',
-          headers: {{'Content-Type':'application/json'}},
-          body: JSON.stringify(data)
-        }});
-        if(!res.ok) throw new Error(await res.text());
-        localStorage.setItem("voted", "1");
-        window.location.replace(RESULTS_URL);
-      }} catch(err){{
+    btn.addEventListener('click', function(){
+      btn.disabled = true; msg.textContent = "Đang gửi..."; msg.className = "muted";
+      try {
+        var fd = new FormData(form);
+        fd.append('submitted_at', new Date().toISOString());
+
+        // chuyển FormData -> x-www-form-urlencoded
+        var pairs = [];
+        fd.forEach(function(value, key){ pairs.push(encodeURIComponent(key)+"="+encodeURIComponent(value)); });
+        var body = pairs.join("&");
+
+        fetch(SCRIPT_URL, { method:'POST', body: body })
+        .then(function(res){
+          if(!res.ok) throw new Error("HTTP "+res.status);
+          localStorage.setItem("voted", "1");
+          window.location.replace(RESULTS_URL);
+          setTimeout(function(){ window.location.href = RESULTS_URL; }, 600);
+        })
+        .catch(function(err){
+          console.error(err);
+          msg.textContent = "Không gửi được phiếu: " + String(err);
+          msg.className = "err";
+          btn.disabled = false;
+        });
+      } catch(err){
         console.error(err);
-        msg.textContent = "Lỗi gửi phiếu. Vui lòng thử lại hoặc liên hệ BTC.";
-        msg.className="err";
-      }} finally {{ btn.disabled = false; }}
-    }});
+        msg.textContent = "Lỗi trình duyệt khi gửi phiếu.";
+        msg.className = "err";
+        btn.disabled = false;
+      }
+    });
   </script>
 </body>
 </html>

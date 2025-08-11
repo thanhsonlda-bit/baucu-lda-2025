@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Tỷ lệ phiếu – Chi đoàn Khối Văn phòng</title>
+  <style>
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;max-width:900px;margin:0 auto;padding:16px;line-height:1.4}
+    h1{font-size:22px;margin:0 0 12px}
+    .muted{color:#64748b}
+    table{width:100%;border-collapse:collapse;margin-top:12px}
+    th,td{border-bottom:1px solid #e5e7eb;padding:8px;text-align:left}
+    th{background:#f8fafc}
+    .bar{height:10px;border-radius:6px;background:#e5e7eb;position:relative;overflow:hidden}
+    .bar > span{position:absolute;left:0;top:0;bottom:0;background:#22c55e}
+    .rowActions{display:flex;gap:8px;align-items:center;margin-top:10px}
+    button{padding:8px 12px;border:0;border-radius:10px;background:#ef4444;color:#fff;cursor:pointer}
+    .pill{padding:2px 8px;border-radius:999px;background:#f1f5f9;font-size:12px}
+  </style>
+</head>
+<body>
+  <h1>TỶ LỆ PHIẾU</h1>
+  <div class="muted">Tự động cập nhật mỗi 5 giây</div>
+  <div class="rowActions">
+    <div>Tổng số phiếu: <span id="total" class="pill">0</span></div>
+    <button id="btnClear">XÓA DỮ LIỆU</button>
+    <span id="status" class="muted"></span>
+  </div>
+
+  <table id="tbl">
+    <thead>
+      <tr>
+        <th>Ứng viên</th>
+        <th>Đồng ý</th>
+        <th>Không đồng ý</th>
+        <th>% Đồng ý</th>
+        <th>Biểu đồ</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script>
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx4RUMQ0WKFyKJJCv2bZhXEwUNythkLUOe1NMG_gI44K9bDC-fssolk36iLbfHLIilK/exec";
+    const TBL = document.querySelector("#tbl tbody");
+    const TOTAL = document.getElementById("total");
+    const STATUS = document.getElementById("status");
+    const BTN_CLEAR = document.getElementById("btnClear");
+
+    async function loadSummary(){
+      try{
+        STATUS.textContent = "Đang tải...";
+        const res = await fetch(SCRIPT_URL + "?summary=1", {method:"GET"});
+        const js = await res.json();
+        if (!js.ok) throw new Error("Không lấy được dữ liệu");
+        const { total, items } = js.data;
+        TOTAL.textContent = total;
+        TBL.innerHTML = "";
+        items.forEach(it=>{
+          const pct = Math.round((it.pct || 0)*100);
+          const tr = document.createElement("tr");
+          tr.innerHTML = `
+            <td>${it.name}</td>
+            <td>${it.agree}</td>
+            <td>${it.disagree}</td>
+            <td>${pct}%</td>
+            <td><div class="bar"><span style="width:${pct}%"></span></div></td>
+          `;
+          TBL.appendChild(tr);
+        });
+        STATUS.textContent = "Cập nhật: " + new Date().toLocaleTimeString();
+      }catch(err){
+        console.error(err);
+        STATUS.textContent = "Lỗi tải dữ liệu";
+      }
+    }
+
+    BTN_CLEAR.addEventListener("click", async ()=>{
+      const pw = prompt("Nhập mật khẩu để XÓA DỮ LIỆU:");
+      if (pw == null) return;
+      try {
+        STATUS.textContent = "Đang xóa...";
+        const res = await fetch(SCRIPT_URL, {
+          method:"POST",
+          headers:{"Content-Type":"application/json"},
+          body: JSON.stringify({op:"clear", pw})
+        });
+        const js = await res.json();
+        if (!js.ok) throw new Error(js.error || "Xóa thất bại");
+        STATUS.textContent = "Đã xóa dữ liệu.";
+        await loadSummary();
+      } catch(err){
+        STATUS.textContent = "Sai mật khẩu hoặc lỗi xóa.";
+      }
+    });
+
+    loadSummary();
+    setInterval(loadSummary, 5000);
+  </script>
+</body>
+</html>

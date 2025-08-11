@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Phiếu bầu – Chi đoàn Khối Văn phòng (2025–2027)</title>
+  <style>
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;max-width:900px;margin:0 auto;padding:16px;line-height:1.4}
+    header{margin-bottom:12px}
+    h1{font-size:22px;margin:0 0 6px}
+    .card{border:1px solid #e5e7eb;border-radius:12px;padding:16px;margin:12px 0}
+    .row{display:grid;grid-template-columns:1fr 160px 160px;gap:8px;align-items:center}
+    .row.head{font-weight:600;background:#f8fafc;border-radius:8px;padding:8px}
+    .name{padding:8px}
+    .opt{text-align:center}
+    button{padding:10px 16px;border:0;border-radius:10px;background:#0ea5e9;color:white;font-weight:600;cursor:pointer}
+    button:disabled{opacity:.6;cursor:not-allowed}
+    .muted{color:#64748b;font-size:14px}
+    .ok{color:#16a34a}
+    .err{color:#dc2626}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>PHIẾU BẦU ĐẠI BIỂU DỰ ĐẠI HỘI ĐOÀN THANH NIÊN CÔNG TY 2025–2030</h1>
+    <div class="muted">Chi đoàn Khối Văn phòng – Lâm Đồng</div>
+  </header>
+
+  <form id="voteForm" class="card">
+    <div class="row head">
+      <div class="name">Ứng viên</div>
+      <div class="opt">Đồng ý</div>
+      <div class="opt">Không đồng ý</div>
+    </div>
+
+    <!-- Đại biểu chính -->
+    <div class="row">
+      <div class="name">1. TRẦN THANH SƠN</div>
+      <label class="opt"><input type="radio" name="SON_1" value="Đồng ý" required></label>
+      <label class="opt"><input type="radio" name="SON_1" value="Không đồng ý"></label>
+    </div>
+    <div class="row">
+      <div class="name">2. THÂN NGUYỄN MINH HUY</div>
+      <label class="opt"><input type="radio" name="HUY_2" value="Đồng ý" required></label>
+      <label class="opt"><input type="radio" name="HUY_2" value="Không đồng ý"></label>
+    </div>
+    <div class="row">
+      <div class="name">3. NGUYỄN DƯƠNG MAI NHUNG</div>
+      <label class="opt"><input type="radio" name="NHUNG_3" value="Đồng ý" required></label>
+      <label class="opt"><input type="radio" name="NHUNG_3" value="Không đồng ý"></label>
+    </div>
+    <div class="row">
+      <div class="name">4. TRẦN THANH CẢNH</div>
+      <label class="opt"><input type="radio" name="CANH_4" value="Đồng ý" required></label>
+      <label class="opt"><input type="radio" name="CANH_4" value="Không đồng ý"></label>
+    </div>
+    <div class="row">
+      <div class="name">5. VÕ VĂN HIẾU</div>
+      <label class="opt"><input type="radio" name="HIEU_5" value="Đồng ý" required></label>
+      <label class="opt"><input type="radio" name="HIEU_5" value="Không đồng ý"></label>
+    </div>
+    <div class="row">
+      <div class="name">6. NGUYỄN THỊ THÙY TRANG</div>
+      <label class="opt"><input type="radio" name="TRANG_6" value="Đồng ý" required></label>
+      <label class="opt"><input type="radio" name="TRANG_6" value="Không đồng ý"></label>
+    </div>
+    <div class="row">
+      <div class="name">7. LÊ HỮU MINH</div>
+      <label class="opt"><input type="radio" name="MINH_7" value="Đồng ý" required></label>
+      <label class="opt"><input type="radio" name="MINH_7" value="Không đồng ý"></label>
+    </div>
+    <div class="row">
+      <div class="name">8. THÁI THỊ CHÂU</div>
+      <label class="opt"><input type="radio" name="CHAU_8" value="Đồng ý" required></label>
+      <label class="opt"><input type="radio" name="CHAU_8" value="Không đồng ý"></label>
+    </div>
+    <div class="row">
+      <div class="name">9. TRẦN DANH KHOA</div>
+      <label class="opt"><input type="radio" name="KHOA_9" value="Đồng ý" required></label>
+      <label class="opt"><input type="radio" name="KHOA_9" value="Không đồng ý"></label>
+    </div>
+    <div class="row">
+      <div class="name">10. NGUYỄN ANH TRẠNG</div>
+      <label class="opt"><input type="radio" name="TRANG_10" value="Đồng ý" required></label>
+      <label class="opt"><input type="radio" name="TRANG_10" value="Không đồng ý"></label>
+    </div>
+
+    <hr style="margin:16px 0;border:none;border-top:1px dashed #e5e7eb" />
+    <div class="row head"><div class="name">Dự khuyết</div><div></div><div></div></div>
+    <div class="row">
+      <div class="name">1. NGUYỄN MINH TRÍ</div>
+      <label class="opt"><input type="radio" name="TRI_DK_1" value="Đồng ý" required></label>
+      <label class="opt"><input type="radio" name="TRI_DK_1" value="Không đồng ý"></label>
+    </div>
+
+    <div style="margin-top:16px">
+      <label class="muted">Mã định danh (nếu áp dụng chống trùng): </label>
+      <input type="text" name="token" placeholder="Nhập mã được cấp (nếu có)" style="padding:8px;border:1px solid #e5e7eb;border-radius:8px;width:260px">
+    </div>
+
+    <div style="margin-top:16px;display:flex;gap:10px;align-items:center">
+      <button type="submit" id="btnSubmit">Gửi phiếu</button>
+      <span id="msg" class="muted"></span>
+    </div>
+  </form>
+
+  <script>
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx4RUMQ0WKFyKJJCv2bZhXEwUNythkLUOe1NMG_gI44K9bDC-fssolk36iLbfHLIilK/exec";
+    const RESULTS_URL = "results.html";
+
+    if (localStorage.getItem("voted") === "1") {{ window.location.replace(RESULTS_URL); }}
+
+    const form = document.getElementById('voteForm');
+    const btn = document.getElementById('btnSubmit');
+    const msg = document.getElementById('msg');
+
+    history.replaceState(null, "", location.href);
+    window.addEventListener("popstate", function(){{ window.location.replace(RESULTS_URL); }});
+
+    form.addEventListener('submit', async (e) => {{
+      e.preventDefault();
+      btn.disabled = true; msg.textContent = "Đang gửi...";
+      try {{
+        const data = Object.fromEntries(new FormData(form).entries());
+        data.submitted_at = new Date().toISOString();
+        const res = await fetch(SCRIPT_URL, {{
+          method: 'POST',
+          mode: 'cors',
+          headers: {{'Content-Type':'application/json'}},
+          body: JSON.stringify(data)
+        }});
+        if(!res.ok) throw new Error(await res.text());
+        localStorage.setItem("voted", "1");
+        window.location.replace(RESULTS_URL);
+      }} catch(err){{
+        console.error(err);
+        msg.textContent = "Lỗi gửi phiếu. Vui lòng thử lại hoặc liên hệ BTC.";
+        msg.className="err";
+      }} finally {{ btn.disabled = false; }}
+    }});
+  </script>
+</body>
+</html>

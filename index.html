@@ -5,15 +5,18 @@
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Phiếu bầu – Chi đoàn Khối Văn phòng (2025–2027)</title>
 <style>
-  :root{--blue:#0b74d1;--blue2:#0ea5e9;--red:#e11d48;--muted:#64748b;--bg:#f8fafc;--bd:#e5e7eb;--ok:#16a34a;--err:#dc2626}
+  :root{--blue:#0b74d1;--red:#e11d48;--muted:#64748b;--bg:#f8fafc;--bd:#e5e7eb;--ok:#16a34a;--err:#dc2626}
   *{box-sizing:border-box}
   body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:linear-gradient(0deg,#fff,#f3f7fb);color:#0f172a;margin:0}
   .container{max-width:980px;margin:0 auto;padding:20px}
-  header{display:flex;align-items:center;gap:14px;margin-bottom:14px}
+  header{display:flex;align-items:center;gap:14px;margin-bottom:6px}
   .badge{background:var(--blue);color:#fff;padding:8px 12px;border-radius:999px;font-weight:700;letter-spacing:.3px}
   h1{margin:0;font-size:22px}
   .sub{color:var(--muted);font-size:14px}
-  .card{border:1px solid var(--bd);background:#fff;border-radius:16px;padding:16px;margin:14px 0;box-shadow:0 4px 20px rgba(2,36,89,.06)}
+  .tabs{display:flex;gap:8px;margin:12px 0}
+  .tab{padding:8px 12px;border:1px solid var(--bd);border-radius:999px;background:#fff;cursor:pointer}
+  .tab.active{background:var(--blue);color:#fff;border-color:transparent}
+  .card{border:1px solid var(--bd);background:#fff;border-radius:16px;padding:16px;margin:12px 0;box-shadow:0 4px 20px rgba(2,36,89,.06)}
   .row{display:grid;grid-template-columns:1fr 140px 140px;gap:8px;align-items:center}
   .row.head{font-weight:700;background:var(--bg);border-radius:10px;padding:10px}
   .name{padding:8px}
@@ -45,6 +48,12 @@
       <div class="sub">Chi đoàn Khối Văn phòng – Công ty Nhôm Lâm Đồng - TKV</div>
     </div>
   </header>
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <div id="tabVote" class="tab active">Bỏ phiếu</div>
+    <div id="tabResults" class="tab">Tỷ lệ (BTC)</div>
+  </div>
 
   <!-- A) FORM -->
   <section id="sec-form" class="card">
@@ -118,9 +127,10 @@
 </div>
 
 <script>
-  // === CHUYỂN SANG KẾT QUẢ KHI ĐÃ VOTE ===
-  if (localStorage.getItem("voted")==="1") showResults();
+  // ————— Cấu hình —————
+  var SCRIPT_BASE = "https://script.google.com/macros/s/AKfycbx4RUMQ0WKFyKJJCv2bZhXEwUNythkLUOe1NMG_gI44K9bDC-fssolk36iLbfHLIilK/exec";
 
+  // DOM refs
   var voteForm = document.getElementById('voteForm');
   var secForm  = document.getElementById('sec-form');
   var secRes   = document.getElementById('sec-results');
@@ -129,42 +139,34 @@
   var totalEl  = document.getElementById('total');
   var statusEl = document.getElementById('status');
   var tblBody  = document.querySelector('#tbl tbody');
+  var tabVote  = document.getElementById('tabVote');
+  var tabResults = document.getElementById('tabResults');
   var timer    = null;
 
-  // ====== GỬI PHIẾU: fetch no-cors (đây là phần đã THAY SẴN) ======
+  // Tabs
+  function activate(tab){ 
+    if (tab==='vote'){ secForm.style.display='block'; secRes.style.display='none'; tabVote.classList.add('active'); tabResults.classList.remove('active'); }
+    else { secForm.style.display='none'; secRes.style.display='block'; tabResults.classList.add('active'); tabVote.classList.remove('active'); loadSummaryJSONP(); if (timer) clearInterval(timer); timer=setInterval(loadSummaryJSONP,5000); }
+  }
+  tabVote.onclick    = function(){ activate('vote'); };
+  tabResults.onclick = function(){ activate('results'); };
+
+  // Nếu có ?results=1 → mở tab kết quả, ngược lại mở Form
+  (new URLSearchParams(location.search)).get('results') === '1' ? activate('results') : activate('vote');
+
+  // ====== GỬI PHIẾU: fetch no-cors ======
   btn.addEventListener('click', function(){
-    // kiểm tra hợp lệ (đủ lựa chọn)
-    if (!voteForm.reportValidity()) return;
-
-    // cập nhật timestamp
+    if (!voteForm.reportValidity()) return; // đảm bảo đã chọn đủ
     document.getElementById('submitted_at').value = new Date().toISOString();
-
     msg.textContent = "Đang gửi..."; msg.className = "muted";
     btn.disabled = true;
 
     var fd = new FormData(voteForm);
-
-    // Gửi không đọc phản hồi để tránh CORS hoàn toàn
-    fetch(voteForm.action, { method: 'POST', body: fd, mode: 'no-cors' })
-      .then(function(){
-        localStorage.setItem("voted","1");
-        showResults();
-      })
-      .catch(function(err){
-        console.error(err);
-        msg.textContent = "Không gửi được phiếu: " + String(err);
-        msg.className = "err";
-      })
+    fetch(SCRIPT_BASE, { method: 'POST', body: fd, mode: 'no-cors' })
+      .then(function(){ activate('results'); })
+      .catch(function(err){ console.error(err); msg.textContent = "Không gửi được phiếu: " + String(err); msg.className = "err"; })
       .finally(function(){ btn.disabled = false; });
   });
-
-  function showResults(){
-    secForm.style.display="none";
-    secRes.style.display="block";
-    loadSummaryJSONP(); // gọi ngay
-    if (timer) clearInterval(timer);
-    timer = setInterval(loadSummaryJSONP, 5000);
-  }
 
   // ====== LẤY TÓM TẮT BẰNG JSONP (tránh CORS) ======
   function loadSummaryJSONP(){
@@ -178,7 +180,7 @@
       cleanup();
     };
     var s = document.createElement('script');
-    s.src = "https://script.google.com/macros/s/AKfycbx4RUMQ0WKFyKJJCv2bZhXEwUNythkLUOe1NMG_gI44K9bDC-fssolk36iLbfHLIilK/exec?summary=1&callback="+cbName+"&_="+Date.now();
+    s.src = SCRIPT_BASE + "?summary=1&callback="+cbName+"&_=" + Date.now();
     s.onerror = function(){ statusEl.textContent = "Lỗi tải dữ liệu"; cleanup(); };
     document.body.appendChild(s);
     function cleanup(){ delete window[cbName]; s.remove(); }
@@ -201,16 +203,14 @@
     statusEl.textContent = "Cập nhật: " + new Date().toLocaleTimeString();
   }
 
-  // ====== XÓA DỮ LIỆU: gọi JSON (vì cùng Apps Script, dùng prompt mật khẩu) ======
+  // ====== XÓA DỮ LIỆU ======
   document.getElementById('btnClear').addEventListener('click', function(){
     var pw = prompt("Nhập mật khẩu để XÓA DỮ LIỆU:");
     if (pw==null) return;
-    // Xóa qua JSON bình thường (Apps Script chấp nhận) – nếu bị CORS, có thể đổi sang iframe như trước
-    fetch("https://script.google.com/macros/s/AKfycbx4RUMQ0WKFyKJJCv2bZhXEwUNythkLUOe1NMG_gI44K9bDC-fssolk36iLbfHLIilK/exec", {
+    fetch(SCRIPT_BASE, {
       method:"POST",
       headers:{"Content-Type":"application/json"},
-      body: JSON.stringify({op:"clear", pw: pw}),
-      // nếu gặp CORS ở môi trường nào đó, đổi sang: mode: 'no-cors' (khi đó không đọc được phản hồi)
+      body: JSON.stringify({op:"clear", pw: pw})
     }).then(function(){ loadSummaryJSONP(); });
   });
 </script>
